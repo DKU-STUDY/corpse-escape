@@ -1,7 +1,10 @@
 # corpse-escape
 ko.시체 탈출 
 
-특정 시간 마다 알려주는 스트레칭 
+특정 시간 마다 알려주는 스트레칭
+
+## 기획
+https://www.figma.com/file/fqXVK02mN2waGzgnYb4WyG/%ED%97%AC%EC%8A%A4-%EB%85%B8%ED%8A%B8?node-id=2%3A98
 
 ## 기능 
 - 30분마다 자세 알림
