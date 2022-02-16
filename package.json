@@ -1,0 +1,10 @@
+{
+  "name": "corpse-escape",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/DKU-STUDY/corpse-escape",
+  "author": "junilHwang <junil.h@kakao.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [ ".packages/*" ]
+}
