@@ -35,8 +35,6 @@ export function settingReducer(
   }
 }
 
-type SettingContextType =
-  | (SettingState & { dispatch: React.Dispatch<Action> })
-  | null;
+type SettingContextType = SettingState & { dispatch: React.Dispatch<Action> };
 
-export const SettingContext = createContext<SettingContextType>(null);
+export const SettingContext = createContext<SettingContextType>(null as any);
