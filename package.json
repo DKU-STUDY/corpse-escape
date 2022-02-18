@@ -6,5 +6,7 @@
   "author": "junilHwang <junil.h@kakao.com>",
   "license": "MIT",
   "private": true,
-  "workspaces": [ ".packages/*" ]
+  "workspaces": [
+    ".packages/*"
+  ]
 }
