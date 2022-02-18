@@ -6,47 +6,29 @@ import React, {
   useState,
 } from "react";
 import { IntervalLabels, PositionLabels } from "domain";
-import { SET_INTERVAL, SET_POSITION, SettingContext } from "../../context";
+import { SettingContext } from "../../context";
 
 interface Props {}
 
-const Setting: React.FC<Props> = ({}) => {
-  const { position, dispatch } = useContext(SettingContext);
-  const [interval, setInterval] = useState(0);
-  const positions = Object.entries(PositionLabels);
-  const intervals = Object.entries(IntervalLabels);
-
-  const handleChangePosition: ChangeEventHandler<HTMLInputElement> =
-    useCallback(
-      (event) => {
-        dispatch({ type: SET_POSITION, payload: event.target.value });
-      },
-      [position]
-    );
-
+const useSelectedInterval = () => {
+  const [selectedInterval, setSelectedInterval] = useState(0);
   const handleClickIntervalLabel: MouseEventHandler<HTMLButtonElement> =
     useCallback(
       (event) => {
-        setInterval(interval + Number(event.target.value));
+        setSelectedInterval(selectedInterval + Number(event.target.value));
       },
-      [interval]
+      [selectedInterval]
     );
 
-  const handleClickIntervalSubmit:
-    | MouseEventHandler<HTMLButtonElement>
-    | KeyboardEvent = useCallback(
-    (event) => {
-      dispatch({ type: SET_INTERVAL, payload: interval });
-    },
-    [interval]
-  );
+  const handleClickIntervalSubmit: MouseEventHandler<HTMLButtonElement> =
+    useCallback((event) => {}, [selectedInterval]);
 
   const handleClickIntervalInit: MouseEventHandler<HTMLButtonElement> =
     useCallback(
       (event) => {
-        setInterval(0);
+        setSelectedInterval(0);
       },
-      [interval]
+      [selectedInterval]
     );
 
   const handleChangeInterval: ChangeEventHandler<HTMLInputElement> =
@@ -56,10 +38,54 @@ const Setting: React.FC<Props> = ({}) => {
         if (isNaN(number)) {
           return;
         }
-        setInterval(number);
+        setSelectedInterval(number);
       },
-      [interval]
+      [selectedInterval]
     );
+
+  return {
+    selectedInterval,
+    handleClickIntervalLabel,
+    handleClickIntervalSubmit,
+    handleClickIntervalInit,
+    handleChangeInterval,
+  };
+};
+
+const useSelectedPosition = () => {
+  const [selectedPosition, setSelectedPosition] = useState(
+    PositionLabels.LANDING
+  );
+
+  const handleChangePosition: ChangeEventHandler<HTMLInputElement> =
+    useCallback(
+      (event) => {
+        setSelectedPosition(event.target.value);
+      },
+      [selectedPosition]
+    );
+
+  return {
+    selectedPosition,
+    handleChangePosition,
+  };
+};
+
+const Setting: React.FC<Props> = ({}) => {
+  const { dispatch } = useContext(SettingContext);
+  const {
+    selectedInterval,
+    handleClickIntervalLabel,
+    handleClickIntervalSubmit,
+    handleClickIntervalInit,
+    handleChangeInterval,
+  } = useSelectedInterval();
+  const { selectedPosition, handleChangePosition } = useSelectedPosition();
+
+  const positions = Object.entries(PositionLabels);
+  const intervals = Object.entries(IntervalLabels);
+
+  /** interval 관련 코드 작성 **/
 
   return (
     <div>
@@ -70,7 +96,7 @@ const Setting: React.FC<Props> = ({}) => {
           <input
             type="radio"
             name="position"
-            checked={value === position}
+            checked={value === selectedPosition}
             onChange={handleChangePosition}
             value={value}
           />
@@ -85,7 +111,7 @@ const Setting: React.FC<Props> = ({}) => {
       ))}
       <button onClick={handleClickIntervalInit}>다시 입력</button>
       <p>
-        <input value={interval} onChange={handleChangeInterval} /> 분
+        <input value={selectedInterval} onChange={handleChangeInterval} /> 분
         <button onClick={handleClickIntervalSubmit}>입력</button>
       </p>
     </div>
