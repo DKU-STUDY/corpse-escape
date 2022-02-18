@@ -19,3 +19,11 @@ https://www.figma.com/file/fqXVK02mN2waGzgnYb4WyG/%ED%97%AC%EC%8A%A4-%EB%85%B8%E
 - 일러스트레이터 등록 작가 등록
 - 트레이너 등록, 수익창출 
 - 조직 등록 
+
+## Project
+
+### client 
+created project with...
+```shell
+yarn create vite client --template react-ts
+```
