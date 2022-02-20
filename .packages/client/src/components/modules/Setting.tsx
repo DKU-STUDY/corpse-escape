@@ -1,62 +1,14 @@
-import React, {
-  ChangeEventHandler,
-  MouseEventHandler,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
-import { IntervalLabels, PositionLabels } from "domain";
-import { SettingContext } from "../../context";
+import React, { ChangeEventHandler, useCallback, useState } from "react";
+import { DurationLabels, IntervalLabels, PositionLabels } from "domain";
+import SettingTime from "./SettingTime";
 
 interface Props {}
-
-const useSelectedInterval = () => {
-  const [selectedInterval, setSelectedInterval] = useState(0);
-  const handleClickIntervalLabel: MouseEventHandler<HTMLButtonElement> =
-    useCallback(
-      (event) => {
-        setSelectedInterval(selectedInterval + Number(event.target.value));
-      },
-      [selectedInterval]
-    );
-
-  const handleClickIntervalSubmit: MouseEventHandler<HTMLButtonElement> =
-    useCallback((event) => {}, [selectedInterval]);
-
-  const handleClickIntervalInit: MouseEventHandler<HTMLButtonElement> =
-    useCallback(
-      (event) => {
-        setSelectedInterval(0);
-      },
-      [selectedInterval]
-    );
-
-  const handleChangeInterval: ChangeEventHandler<HTMLInputElement> =
-    useCallback(
-      (event) => {
-        const number = Number(event.target.value);
-        if (isNaN(number)) {
-          return;
-        }
-        setSelectedInterval(number);
-      },
-      [selectedInterval]
-    );
-
-  return {
-    selectedInterval,
-    handleClickIntervalLabel,
-    handleClickIntervalSubmit,
-    handleClickIntervalInit,
-    handleChangeInterval,
-  };
-};
 
 const useSelectedPosition = () => {
   const [selectedPosition, setSelectedPosition] = useState(
     PositionLabels.LANDING
   );
-
+  const positions = Object.entries(PositionLabels);
   const handleChangePosition: ChangeEventHandler<HTMLInputElement> =
     useCallback(
       (event) => {
@@ -67,23 +19,16 @@ const useSelectedPosition = () => {
 
   return {
     selectedPosition,
+    positions,
     handleChangePosition,
   };
 };
 
 const Setting: React.FC<Props> = ({}) => {
-  const { dispatch } = useContext(SettingContext);
-  const {
-    selectedInterval,
-    handleClickIntervalLabel,
-    handleClickIntervalSubmit,
-    handleClickIntervalInit,
-    handleChangeInterval,
-  } = useSelectedInterval();
-  const { selectedPosition, handleChangePosition } = useSelectedPosition();
-
-  const positions = Object.entries(PositionLabels);
   const intervals = Object.entries(IntervalLabels);
+  const durations = Object.entries(DurationLabels);
+  const { selectedPosition, handleChangePosition, positions } =
+    useSelectedPosition();
 
   /** interval 관련 코드 작성 **/
 
@@ -104,16 +49,9 @@ const Setting: React.FC<Props> = ({}) => {
         </label>
       ))}
       <p>[ ] 마다 스트레칭을 하고 싶어요</p>
-      {intervals.map(([value, label]) => (
-        <button value={value} onClick={handleClickIntervalLabel}>
-          {label}
-        </button>
-      ))}
-      <button onClick={handleClickIntervalInit}>다시 입력</button>
-      <p>
-        <input value={selectedInterval} onChange={handleChangeInterval} /> 분
-        <button onClick={handleClickIntervalSubmit}>입력</button>
-      </p>
+      <SettingTime labels={intervals} />
+      <p>[ ] 분 동안 몸 풀래요</p>
+      <SettingTime labels={durations} />
     </div>
   );
 };
