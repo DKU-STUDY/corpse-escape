@@ -27,3 +27,15 @@ export const IntervalLabels: Record<IntervalType, string> = {
   [IntervalType.HOUR_1]: "1 시간",
   [IntervalType.HOUR_2]: "2 시간",
 };
+
+export const enum DurationType {
+  MIN_1 = 1,
+  MIN_5 = 5,
+  MIN_10 = 10,
+}
+
+export const DurationLabels: Record<DurationType, string> = {
+  [DurationType.MIN_1]: "1 분",
+  [DurationType.MIN_5]: "5 분",
+  [DurationType.MIN_10]: "10 분",
+};
