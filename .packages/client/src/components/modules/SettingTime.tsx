@@ -1,34 +1,18 @@
-import React, {
-  ChangeEventHandler,
-  MouseEventHandler,
-  useCallback,
-  useState,
-} from "react";
+import React, { ChangeEventHandler, useState } from "react";
 
 const useSelectedTime = () => {
   const [selectedTime, setSelectedTime] = useState(0);
-  const handleClickLabel: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      setSelectedTime(selectedTime + Number(event.target.value));
-    },
-    [selectedTime]
-  );
-  const handleClickSubmit: MouseEventHandler<HTMLButtonElement> =
-    useCallback(() => {}, [selectedTime]);
-  const handleClickInit: MouseEventHandler<HTMLButtonElement> =
-    useCallback(() => {
-      setSelectedTime(0);
-    }, [selectedTime]);
-  const handleChangeTime: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (event) => {
-      const number = Number(event.target.value);
-      if (isNaN(number)) {
-        return;
-      }
-      setSelectedTime(number);
-    },
-    [selectedTime]
-  );
+  const handleClickLabel = (value: string) => () =>
+    setSelectedTime(selectedTime + Number(value));
+  const handleClickSubmit = () => {};
+  const handleClickInit = () => setSelectedTime(0);
+  const handleChangeTime: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const number = Number(event.target.value);
+    if (isNaN(number)) {
+      return;
+    }
+    setSelectedTime(number);
+  };
 
   return {
     selectedTime,
@@ -54,9 +38,7 @@ const SettingTime: React.FC<Props> = ({ labels }) => {
   return (
     <div>
       {labels.map(([value, label]) => (
-        <button value={value} onClick={handleClickLabel}>
-          {label}
-        </button>
+        <button onClick={handleClickLabel(value)}>{label}</button>
       ))}
       <button onClick={handleClickInit}>다시 입력</button>
       <p>
