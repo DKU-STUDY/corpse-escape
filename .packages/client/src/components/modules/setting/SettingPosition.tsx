@@ -1,18 +1,16 @@
-import React, {
-  ChangeEventHandler,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
-import { PositionLabels, PositionType } from "domain";
-import { Conditional } from "../../../hoc";
+import React, { ChangeEventHandler, useMemo, useState } from "react";
+import { EditingStateType, PositionLabels, PositionType } from "domain";
+import SettingOption from "./SettingOption";
 
 interface Props {
-  setStep: (step: number) => void;
-  isShow: boolean;
+  editingStateType: EditingStateType;
+  setEditingState: () => void;
 }
 
-const SettingPosition: React.FC<Props> = ({ setStep, isShow }) => {
+const SettingPosition: React.FC<Props> = ({
+  editingStateType,
+  setEditingState,
+}) => {
   const [selectedPosition, setSelectedPosition] = useState(PositionType.EMPTY);
   const positions = useMemo(
     () =>
@@ -20,20 +18,22 @@ const SettingPosition: React.FC<Props> = ({ setStep, isShow }) => {
     []
   );
 
-  const handleChangePosition: ChangeEventHandler<HTMLInputElement> =
-    useCallback(
-      (event) => {
-        setSelectedPosition(event.target.value as PositionType);
-        setStep(1);
-      },
-      [selectedPosition]
-    );
+  const handleChangePosition: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    setSelectedPosition(event.target.value as PositionType);
+    setEditingState();
+  };
 
   return (
-    <div>
-      <p>저는 {selectedPosition ? PositionLabels[selectedPosition] : ""}</p>
-
-      <Conditional condition={step === 0}>
+    <>
+      <SettingOption
+        question={"저는 []"}
+        selectedOption={
+          selectedPosition ? PositionLabels[selectedPosition] : ""
+        }
+        editingStateType={editingStateType}
+      >
         {positions.map(([value, label]) => (
           <label key={value}>
             <input
@@ -46,8 +46,8 @@ const SettingPosition: React.FC<Props> = ({ setStep, isShow }) => {
             {label}
           </label>
         ))}
-      </Conditional>
-    </div>
+      </SettingOption>
+    </>
   );
 };
 

@@ -1,3 +1,9 @@
+export const enum SettingOptionType {
+  POSITION = "POSITION",
+  INTERVAL = "INTERVAL",
+  DURATION = "DURATION",
+}
+
 export const enum PositionType {
   EMPTY = "EMPTY",
   LANDING = "LANDING",
@@ -41,3 +47,9 @@ export const DurationLabels: Record<DurationType, string> = {
   [DurationType.MIN_5]: "5 분",
   [DurationType.MIN_10]: "10 분",
 };
+
+export const enum EditingStateType {
+  EMPTY = "EMPTY",
+  EDIT = "EDIT",
+  COMPLETE = "COMPLETE",
+}
