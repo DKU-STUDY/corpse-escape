@@ -1,4 +1,5 @@
 export const enum PositionType {
+  EMPTY = "EMPTY",
   LANDING = "LANDING",
   CHAIR = "CHAIR",
   SEDENTARY = "SEDENTARY",
@@ -7,6 +8,7 @@ export const enum PositionType {
 }
 
 export const PositionLabels: Record<PositionType, string> = {
+  [PositionType.EMPTY]: "",
   [PositionType.LANDING]: "서있어요",
   [PositionType.CHAIR]: "의자에 앉아 있어요",
   [PositionType.SEDENTARY]: "좌식 의자에 앉아 있어요",
