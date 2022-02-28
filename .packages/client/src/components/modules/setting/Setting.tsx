@@ -40,27 +40,30 @@ export const Setting: React.FC<Props> = ({}) => {
     );
   };
 
+  const setOneOfEditingState = (settingOptionType: SettingOptionType) => () =>
+    setEditingState(settingOptionType);
+
   return (
     <div>
       <p>반갑습니다.</p>
       <Conditional condition={isShowOption(SettingOptionType.POSITION)}>
         <SettingPosition
           editingStateType={editingState[SettingOptionType.POSITION]}
-          setEditingState={() => setEditingState(SettingOptionType.POSITION)}
+          setEditingState={setOneOfEditingState(SettingOptionType.POSITION)}
         />
       </Conditional>
 
       <Conditional condition={isShowOption(SettingOptionType.INTERVAL)}>
         <SettingInterval
           editingStateType={editingState[SettingOptionType.INTERVAL]}
-          setEditingState={() => setEditingState(SettingOptionType.INTERVAL)}
+          setEditingState={setOneOfEditingState(SettingOptionType.INTERVAL)}
         />
       </Conditional>
 
       <Conditional condition={isShowOption(SettingOptionType.DURATION)}>
         <SettingDuration
           editingStateType={editingState[SettingOptionType.DURATION]}
-          setEditingState={() => setEditingState(SettingOptionType.DURATION)}
+          setEditingState={setOneOfEditingState(SettingOptionType.DURATION)}
         />
       </Conditional>
 

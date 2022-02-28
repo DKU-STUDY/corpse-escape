@@ -18,8 +18,8 @@ export const SettingDuration: React.FC<Props> = ({
   return (
     <>
       <SettingOption
-        question={"[] 분 동안 몸 풀래요"}
-        selectedOption={(!!selectedTime ? `${selectedTime} 분` : "") + ""}
+        question={"[] 동안 몸 풀래요"}
+        selectedOption={String(!!selectedTime ? `${selectedTime} 분` : "")}
         editingStateType={editingStateType}
       >
         <SettingTime
