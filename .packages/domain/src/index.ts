@@ -1,4 +1,11 @@
+export const enum SettingOptionType {
+  POSITION = "POSITION",
+  INTERVAL = "INTERVAL",
+  DURATION = "DURATION",
+}
+
 export const enum PositionType {
+  EMPTY = "EMPTY",
   LANDING = "LANDING",
   CHAIR = "CHAIR",
   SEDENTARY = "SEDENTARY",
@@ -7,6 +14,7 @@ export const enum PositionType {
 }
 
 export const PositionLabels: Record<PositionType, string> = {
+  [PositionType.EMPTY]: "",
   [PositionType.LANDING]: "서있어요",
   [PositionType.CHAIR]: "의자에 앉아 있어요",
   [PositionType.SEDENTARY]: "좌식 의자에 앉아 있어요",
@@ -39,3 +47,9 @@ export const DurationLabels: Record<DurationType, string> = {
   [DurationType.MIN_5]: "5 분",
   [DurationType.MIN_10]: "10 분",
 };
+
+export const enum EditingStateType {
+  EMPTY = "EMPTY",
+  EDIT = "EDIT",
+  COMPLETE = "COMPLETE",
+}

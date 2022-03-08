@@ -1,10 +1,27 @@
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler, Dispatch, SetStateAction } from "react";
 
-const useSelectedTime = () => {
-  const [selectedTime, setSelectedTime] = useState(0);
+interface Props {
+  labels: [string, string][];
+  selectedTime: number;
+  setSelectedTime: Dispatch<SetStateAction<any>>;
+  setEditingState: () => void;
+}
+
+const SettingTime: React.FC<Props> = ({
+  labels,
+  selectedTime,
+  setSelectedTime,
+  setEditingState,
+}) => {
   const handleClickLabel = (value: string) => () =>
     setSelectedTime(selectedTime + Number(value));
-  const handleClickSubmit = () => {};
+  const handleClickSubmit = () => {
+    if (!selectedTime) {
+      alert("0 이상 입력해주세요");
+      return;
+    }
+    setEditingState();
+  };
   const handleClickInit = () => setSelectedTime(0);
   const handleChangeTime: ChangeEventHandler<HTMLInputElement> = (event) => {
     const number = Number(event.target.value);
@@ -14,31 +31,12 @@ const useSelectedTime = () => {
     setSelectedTime(number);
   };
 
-  return {
-    selectedTime,
-    handleClickLabel,
-    handleClickSubmit,
-    handleClickInit,
-    handleChangeTime,
-  };
-};
-
-interface Props {
-  labels: [string, string][];
-}
-
-const SettingTime: React.FC<Props> = ({ labels }) => {
-  const {
-    selectedTime,
-    handleClickLabel,
-    handleClickSubmit,
-    handleClickInit,
-    handleChangeTime,
-  } = useSelectedTime();
   return (
     <div>
       {labels.map(([value, label]) => (
-        <button onClick={handleClickLabel(value)}>{label}</button>
+        <button key={value} onClick={handleClickLabel(value)}>
+          {label}
+        </button>
       ))}
       <button onClick={handleClickInit}>다시 입력</button>
       <p>
